@@ -33,11 +33,12 @@ jobs:
       - name: Run & export Pluto notebooks
         run: |
           pwd
+          mkdir plots/
           cd notebooks
           julia *
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: four-sheet figures
-          path: notebooks/*.pdf
+          name: Generated plots
+          path: plots/

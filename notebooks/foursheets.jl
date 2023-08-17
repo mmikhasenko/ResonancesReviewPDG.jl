@@ -12,12 +12,17 @@ begin
 	Pkg.activate(".")
 	Pkg.instantiate()
 	# 
+	using CairoMakie
+	# 
 	using WGLMakie
 	using WGLMakie.Makie.PlotUtils
 	# 
 	using PlutoUI
 	using LaTeXStrings
 end
+
+# ╔═╡ d48c02ef-4b0b-4b69-b068-818dbda10119
+(path = joinpath(@__DIR__, "..", "plots"); !isdir(path) && mkdir(path))
 
 # ╔═╡ 4a4f9272-b3d2-455e-8e1b-1598ab6bf241
 Base.sqrt(z,ϕ) = sqrt(z*cis(ϕ))*cis(-ϕ/2)
@@ -45,6 +50,8 @@ end
 
 # ╔═╡ 87c5322e-68b3-4fbf-9550-bdd7674bdcff
 fig = let
+	WGLMakie.activate!()
+	# 
 	ym = 1.4
 	x = range(-1,2, 20)
 	y1 = range(-ym,-1e-5,10)
@@ -85,7 +92,7 @@ fig = let
 	annotations!(sv, xy, fontsize=30, align=(:center,:center))	
 	#
 	try 
-		s = save("foursheets_s_plane.pdf", fig)
+		s = save(oinpath(@__DIR__, "..", "plots", "foursheets_s_plane.png"), fig)
 	catch e
 		@info "Could not save: $e.f"
 	end
@@ -94,6 +101,8 @@ end
 
 # ╔═╡ cd2215e2-2332-465d-a3e3-24b07b99ee8f
 begin
+	CairoMakie.activate!()
+	# 
 	f = Figure(fontsize = 25, resolution = (1000, 800))
 	ax = Axis(f[1, 1], aspect=1,
 		    xlabel = L"\mathrm{Re}(\omega)",
@@ -119,7 +128,7 @@ begin
 	annotations!(sv, xy, fontsize=30, align=(:center,:center))
 	#
 	try 
-		s = save("foursheets_omega_plane.pdf", fig)
+		s = save(joinpath(@__DIR__, "..", "plots", "foursheets_omega_plane.pdf"), fig)
 	catch e
 		@info "Could not save: $e.f"
 	end
@@ -129,9 +138,10 @@ end
 
 # ╔═╡ Cell order:
 # ╠═2f4dd2f2-3c25-11ee-2f9d-8d445e1bd0c7
+# ╠═d48c02ef-4b0b-4b69-b068-818dbda10119
 # ╠═4a4f9272-b3d2-455e-8e1b-1598ab6bf241
 # ╠═6bb69d21-4470-4cb3-88c7-556e3ff2afc7
 # ╠═46453bf3-770a-487a-bcf3-c4a34423a4f1
 # ╠═ceee5325-c223-4b94-9ad0-e1359efd52b4
-# ╠═cd2215e2-2332-465d-a3e3-24b07b99ee8f
 # ╠═87c5322e-68b3-4fbf-9550-bdd7674bdcff
+# ╠═cd2215e2-2332-465d-a3e3-24b07b99ee8f
