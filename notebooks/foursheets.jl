@@ -13,9 +13,7 @@ begin
 	Pkg.instantiate()
 	# 
 	using CairoMakie
-	# 
-	using WGLMakie
-	using WGLMakie.Makie.PlotUtils
+	using CairoMakie.Makie.PlotUtils
 	# 
 	using PlutoUI
 	using LaTeXStrings
@@ -50,8 +48,6 @@ end
 
 # ╔═╡ 87c5322e-68b3-4fbf-9550-bdd7674bdcff
 fig = let
-	WGLMakie.activate!()
-	# 
 	ym = 1.4
 	x = range(-1,2, 20)
 	y1 = range(-ym,-1e-5,10)
@@ -92,7 +88,8 @@ fig = let
 	annotations!(sv, xy, fontsize=30, align=(:center,:center))	
 	#
 	try 
-		s = save(oinpath(@__DIR__, "..", "plots", "foursheets_s_plane.png"), fig)
+		save(oinpath(@__DIR__, "..", "plots", "foursheets_s_plane.pdf"), fig)
+		save(oinpath(@__DIR__, "..", "plots", "foursheets_s_plane.png"), fig)
 	catch e
 		@info "Could not save: $e.f"
 	end
@@ -101,9 +98,7 @@ end
 
 # ╔═╡ cd2215e2-2332-465d-a3e3-24b07b99ee8f
 begin
-	CairoMakie.activate!()
-	# 
-	f = Figure(fontsize = 25, resolution = (1000, 800))
+	fig = Figure(fontsize = 25, resolution = (1000, 800))
 	ax = Axis(f[1, 1], aspect=1,
 		    xlabel = L"\mathrm{Re}(\omega)",
     		ylabel = L"\mathrm{Im}(\omega)",
@@ -128,7 +123,8 @@ begin
 	annotations!(sv, xy, fontsize=30, align=(:center,:center))
 	#
 	try 
-		s = save(joinpath(@__DIR__, "..", "plots", "foursheets_omega_plane.pdf"), fig)
+		save(joinpath(@__DIR__, "..", "plots", "foursheets_omega_plane.pdf"), fig)
+		save(joinpath(@__DIR__, "..", "plots", "foursheets_omega_plane.png"), fig)
 	catch e
 		@info "Could not save: $e.f"
 	end
