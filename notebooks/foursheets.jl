@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.22
+# v0.19.27
 
 using Markdown
 using InteractiveUtils
@@ -118,8 +118,8 @@ fig1 = let
 	annotations!(sv, xy, fontsize=30, align=(:center,:center))	
 	#
 	try 
-		save(oinpath(@__DIR__, "..", "plots", "foursheets_s_plane.pdf"), f)
-		save(oinpath(@__DIR__, "..", "plots", "foursheets_s_plane.png"), f)
+		save(joinpath(@__DIR__, "..", "plots", "foursheets_s_plane.pdf"), f)
+		save(joinpath(@__DIR__, "..", "plots", "foursheets_s_plane.png"), f)
 	catch e
 		@info "Could not save: $e.f"
 	end
