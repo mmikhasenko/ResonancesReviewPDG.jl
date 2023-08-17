@@ -1,0 +1,43 @@
+name: Setup GitHub Pages
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+# When two jobs run in parallel, cancel the older ones, to make sure that the website is generated from the most recent commit.
+concurrency:
+  group: fig-export
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v2
+
+      - name: Install Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: 1.9.2
+
+      - name: Cache Julia artifacts & such
+        uses: julia-actions/cache@v1
+        with:
+          cache-registries: "true"
+
+      - name: Run & export Pluto notebooks
+        run: |
+          pwd
+          cd notebooks
+          julia *
+
+      - name: Upload result as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: four-sheet figures
+          path: notebooks/*.pdf
