@@ -1,4 +1,4 @@
-name: Setup GitHub Pages
+name: Export Figures
 on:
   push:
     branches:
