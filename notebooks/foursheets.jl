@@ -106,10 +106,15 @@ fig1 = let
 	addsurface!(x,y1,ω; c=RGB(0.2,0.4,1))
 	addsurface!(x,y2,ω; c=RGB(0.2,0.4,1))
 	# 
+	xv = range(-1,0,2)
+	yv = zero.(xv)
+	zv = map(real ∘ ω, xv .- 1e-6im)
+	lines!(Point3f.(zip(xv,yv,zv .+ 0.03)), linewidth=5, color=:black)
+	# 
 	xv = range(0,2,101)
 	yv = zero.(xv)
 	zv = map(real ∘ ω, xv .- 1e-6im)
-	lines!(Point3f.(zip(xv,yv,zv .+ 0.03)), linewidth=4, color=:lime)
+	lines!(Point3f.(zip(xv,yv,zv .+ 0.03)), linewidth=5, color=:lime)
 	scatter!(Point3f[(0,0.03,0.03)], markersize=23, color=:lime)
 	# 
 	sv = ["21", "12", "11", "22"]
@@ -133,7 +138,7 @@ md"""
 
 # ╔═╡ cd2215e2-2332-465d-a3e3-24b07b99ee8f
 fig2 = let
-	f = Figure(fontsize = 25, resolution = (1000, 800))
+	f = Figure(fontsize = 25, resolution = (800, 600))
 	ax = Axis(f[1, 1], aspect=1,
 		    xlabel = L"\mathrm{Re}(\omega)",
     		ylabel = L"\mathrm{Im}(\omega)",
@@ -148,6 +153,7 @@ fig2 = let
 	hlines!(ax, [0], linewidth=2, color=:black)
 	vlines!(ax, [0], linewidth=2, color=:black)
 	# 
+	lines!(ax, Point2f.(reim.(ω.(range(-1,0,2)))), linewidth=6, color=:black)
 	lines!(ax, Point2f.(reim.(ω.(range(0,2,61)))), linewidth=6, color=:lime)
 	scatter!(ax, Point2f[(0,1)], markersize=30, color=:lime)
 	# 
