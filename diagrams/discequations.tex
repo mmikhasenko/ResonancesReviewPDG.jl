@@ -1,0 +1,78 @@
+\documentclass{standalone}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows.meta}
+
+\begin{document}
+
+\newcommand{\scattblob}[1]{
+    \raisebox{-0.45\height}{
+        \begin{tikzpicture}[
+                decoration={
+                        markings,
+                        mark=at position 0.55 with {\arrow[scale=0.7]{latex}}
+                    }
+            ]
+            % Line 1
+            \draw[postaction={decorate}] (-1,1) -- (0,0);
+            \draw[postaction={decorate}] (0,0) -- (1,-1);
+
+            % Line 2
+            \draw[postaction={decorate}] (-1,-1) -- (0,0);
+            \draw[postaction={decorate}] (0,0) -- (1,1);
+
+            % Circle
+            \draw[black, fill=gray!10] (0,0) circle (0.5) node[] {$#1$};
+        \end{tikzpicture}
+    }}
+
+\newcommand{\unitarityblob}[2]{
+    \raisebox{-0.45\height}{
+        \begin{tikzpicture}[
+                decoration={
+                        markings,
+                        mark=at position 0.55 with {\arrow[scale=0.7]{latex}}
+                    }
+            ]
+            % Line 1
+            \draw[postaction={decorate}] (-2,1) -- (-1,0);
+            \draw[postaction={decorate}] (1,0) -- (2,-1);
+            % Line 2
+            \draw[postaction={decorate}] (-2,-1) -- (-1,0);
+            \draw[postaction={decorate}] (1,0) -- (2,1);
+
+            % Middle lines
+            \draw[postaction={decorate}] (-1,0) to[out=65,in=115] (1,0);
+            \draw[postaction={decorate}] (-1,0) to[out=-65,in=-115] (1,0);
+
+            % Cross
+            \draw[dashed] (-0.5,1) -- (0.5,-1);
+
+            % Circle
+            \draw[black, fill=gray!10] (-1,0) circle (0.5) node[] {$#1$};
+            \draw[black, fill=gray!10] (1,0) circle (0.5) node[] {$#2$};
+
+        \end{tikzpicture}
+    }}
+
+$
+    \text{Disc}\hspace{-2mm}\scattblob{\mathcal{M}_{ab}} = \sum_c\hspace{-2mm}
+    \unitarityblob{\mathcal{M}_{ac}}{\mathcal{M}_{cb}^\dagger}
+    \qquad
+    \text{Disc}\hspace{-2mm}\scattblob{\mathcal{A}_{a}}
+    =\sum_c\hspace{-2mm}\unitarityblob{\mathcal{A}_{c}}{\mathcal{M}_{ca}^\dagger}
+$
+
+% Disc
+% $\Acal_{a} 
+% = 
+% \sum_c
+% \Acal_{c}
+% \Mcal_{ca}^\dagger$
+
+\end{document}

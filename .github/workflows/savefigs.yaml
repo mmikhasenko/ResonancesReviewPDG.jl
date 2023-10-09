@@ -33,9 +33,17 @@ jobs:
       - name: Run & export Pluto notebooks
         run: |
           pwd
-          mkdir plots/
+          mkdir -p plots/
           cd notebooks
           julia *
+
+      - name: Make tikz figures
+        run: |
+          pwd
+          mkdir -p plots/
+          cd diagrams
+          latex *.tex
+          cp *.pdf ../plots/
 
       - name: Upload result as artifact
         uses: actions/upload-artifact@v2
