@@ -77,15 +77,15 @@ md"""
 """
 
 # ╔═╡ 87c5322e-68b3-4fbf-9550-bdd7674bdcff
-fig1 = let
+# fig1 = let
+function four_sheets_s_plane_3d(grid_position)
 	ym = 1.4
 	x = range(-1,2, 20)
 	y1 = range(-ym,-1e-5,10)
 	y2 = range(1e-5,ym, 10)
 	y = vcat(y1, y2)
 	# 
-	f = Figure(fontsize = 25, resolution = (1000, 800))
-	ax = Axis3(f[1, 1]; aspect = (1, 1, 0.5),
+	ax = Axis3(grid_position; aspect = (1, 1, 0.5),
 		    perspectiveness = 0.5, elevation = 0.47, azimuth=1.0,
 		    xlabel = L"\mathrm{Re}(s)",
     		ylabel = L"\mathrm{Im}(s)",
@@ -93,6 +93,10 @@ fig1 = let
 			xtickformat = xv->latexstring.(string.(xv)),
 			ytickformat = xv->latexstring.(string.(xv)),
 			ztickformat = xv->latexstring.(string.(xv)))
+	# 
+	translate!(ax.scene, (0,0,2.5))
+	scale!(ax.scene, 1.2, 1.2, 1.2)
+	# 
 	function addsurface!(x,y, f; c=:green)
 		f′ = real ∘ f ∘ complex
 		z = -f′.(x,y')
@@ -120,14 +124,20 @@ fig1 = let
 	sv = ["21", "12", "11", "22"]
 	xy = Point3f[(0.8,-0.1,-0.2),(1.9,-0.1,1.2),(1.1,1.1,0.1),(1.9,-0.1,-1.5)]
 	scatter!(ax, xy, markersize=80, color=:white)
-	annotations!(sv, xy, fontsize=30, align=(:center,:center))	
-	#
+	annotations!(sv, xy, fontsize=30, align=(:center,:center))
+end
+
+# ╔═╡ 769b7491-4b29-4d42-b9e6-ad5cd0bb72e9
+begin
+	f = Figure(fontsize = 25, resolution = (1200, 600))
+	four_sheets_s_plane_3d(f[1,1])
 	try 
 		save(joinpath(@__DIR__, "..", "plots", "foursheets_s_plane.pdf"), f)
 		save(joinpath(@__DIR__, "..", "plots", "foursheets_s_plane.png"), f)
 	catch e
 		@info "Could not save: $e.f"
 	end
+	Box(f[1, 1], color = (:red, 0.2), strokewidth = 0)
 	f
 end
 
@@ -137,9 +147,8 @@ md"""
 """
 
 # ╔═╡ cd2215e2-2332-465d-a3e3-24b07b99ee8f
-fig2 = let
-	f = Figure(fontsize = 25, resolution = (800, 600))
-	ax = Axis(f[1, 1], aspect=1,
+function foursheets_omega_plane(grid_position)
+	ax = Axis(grid_position, aspect=1,
 		    xlabel = L"\mathrm{Re}(\omega)",
     		ylabel = L"\mathrm{Im}(\omega)",
 			xtickformat = xv->latexstring.(string.(xv)),
@@ -162,10 +171,23 @@ fig2 = let
 	xy = Point2f[(0.4,0.4),(0.4,-0.4),(1.1,1.1),(1.1,-1.1)]
 	scatter!(ax, xy, markersize=90, color=:white)
 	annotations!(sv, xy, fontsize=30, align=(:center,:center))
+end
+
+# ╔═╡ 95c399cc-09c3-46b2-a3d5-9d56592931b2
+let
+	f = Figure(fontsize = 25, resolution = (1500, 700))
+	four_sheets_s_plane_3d(f[1,1])
+	foursheets_omega_plane(f[1,2])
+	# 
+	# Box(f[1, 1], color = (:red, 0.2), strokewidth = 0)
+	# Box(f[1, 2], color = (:red, 0.2), strokewidth = 0)
+	# 
+	colsize!(f.layout, 1, Relative(0.62))
+	# colgap!(f.layout, -30)
 	#
-	try 
-		save(joinpath(@__DIR__, "..", "plots", "foursheets_omega_plane.pdf"), f)
-		save(joinpath(@__DIR__, "..", "plots", "foursheets_omega_plane.png"), f)
+	try
+		save(joinpath(@__DIR__, "..", "plots", "foursheets_maps.pdf"), f)
+		save(joinpath(@__DIR__, "..", "plots", "foursheets_maps.png"), f)
 	catch e
 		@info "Could not save: $e.f"
 	end
@@ -185,5 +207,7 @@ end
 # ╠═ceee5325-c223-4b94-9ad0-e1359efd52b4
 # ╟─9d3dae8f-d380-4254-a976-9d03cb8bf876
 # ╠═87c5322e-68b3-4fbf-9550-bdd7674bdcff
+# ╠═769b7491-4b29-4d42-b9e6-ad5cd0bb72e9
 # ╟─59e98547-1bb6-424c-9be7-362f8aee4ab0
 # ╠═cd2215e2-2332-465d-a3e3-24b07b99ee8f
+# ╠═95c399cc-09c3-46b2-a3d5-9d56592931b2
