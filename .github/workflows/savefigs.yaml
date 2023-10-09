@@ -16,6 +16,10 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    container:
+      image: texlive/texlive
+
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v2
