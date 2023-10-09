@@ -77,7 +77,6 @@ md"""
 """
 
 # ╔═╡ 87c5322e-68b3-4fbf-9550-bdd7674bdcff
-# fig1 = let
 function four_sheets_s_plane_3d(grid_position)
 	ym = 1.4
 	x = range(-1,2, 20)
@@ -89,10 +88,16 @@ function four_sheets_s_plane_3d(grid_position)
 		    perspectiveness = 0.5, elevation = 0.47, azimuth=1.0,
 		    xlabel = L"\mathrm{Re}(s)",
     		ylabel = L"\mathrm{Im}(s)",
-			zlabel = "", # -\mathrm{Re}(\omega(s))
+			zlabel = L"\mathrm{arb. units}",
+			zlabelrotation=π*(0.55),
 			xtickformat = xv->latexstring.(string.(xv)),
 			ytickformat = xv->latexstring.(string.(xv)),
-			ztickformat = xv->latexstring.(string.(xv)))
+			ztickformat = xv->latexstring.(string.(xv))
+			)
+	# 
+	hidezdecorations!(ax, ticks = false, ticklabels=true, label=false, grid=false)
+	hidexdecorations!(ax, ticks = false, ticklabels=true, label=false, grid=false)
+	hidedecorations!
 	# 
 	translate!(ax.scene, (0,0,2.5))
 	scale!(ax.scene, 1.2, 1.2, 1.2)
@@ -137,7 +142,7 @@ begin
 	catch e
 		@info "Could not save: $e.f"
 	end
-	Box(f[1, 1], color = (:red, 0.2), strokewidth = 0)
+	# Box(f[1, 1], color = (:red, 0.2), strokewidth = 0)
 	f
 end
 
