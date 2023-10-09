@@ -90,14 +90,17 @@ function four_sheets_s_plane_3d(grid_position)
     		ylabel = L"\mathrm{Im}(s)",
 			zlabel = L"\mathrm{arb. units}",
 			zlabelrotation=π*(0.55),
+			xlabeloffset=20,
+			ylabeloffset=20,
+			# zlabeloffset=20,
 			xtickformat = xv->latexstring.(string.(xv)),
 			ytickformat = xv->latexstring.(string.(xv)),
 			ztickformat = xv->latexstring.(string.(xv))
 			)
 	# 
-	hidezdecorations!(ax, ticks = false, ticklabels=true, label=false, grid=false)
-	hidexdecorations!(ax, ticks = false, ticklabels=true, label=false, grid=false)
-	hidedecorations!
+	# hidezdecorations!(ax, ticks = false, ticklabels=true, label=false, grid=false)
+	# hidexdecorations!(ax, ticks = false, ticklabels=true, label=false, grid=false)
+	hidedecorations!(ax, ticks = true, ticklabels=true, label=false, grid=true)
 	# 
 	translate!(ax.scene, (0,0,2.5))
 	scale!(ax.scene, 1.2, 1.2, 1.2)
@@ -128,13 +131,13 @@ function four_sheets_s_plane_3d(grid_position)
 	# 
 	sv = ["21", "12", "11", "22"]
 	xy = Point3f[(0.8,-0.1,-0.2),(1.9,-0.1,1.2),(1.1,1.1,0.1),(1.9,-0.1,-1.5)]
-	scatter!(ax, xy, markersize=80, color=:white)
-	annotations!(sv, xy, fontsize=30, align=(:center,:center))
+	scatter!(ax, xy, markersize=70, color=:white)
+	annotations!(sv, xy, fontsize=25, align=(:center,:center))
 end
 
 # ╔═╡ 769b7491-4b29-4d42-b9e6-ad5cd0bb72e9
 begin
-	f = Figure(fontsize = 25, resolution = (1200, 600))
+	f = Figure(fontsize = 25, resolution = (800, 600))
 	four_sheets_s_plane_3d(f[1,1])
 	try 
 		save(joinpath(@__DIR__, "..", "plots", "foursheets_s_plane.pdf"), f)
@@ -180,7 +183,7 @@ end
 
 # ╔═╡ 95c399cc-09c3-46b2-a3d5-9d56592931b2
 let
-	f = Figure(fontsize = 25, resolution = (1500, 700))
+	f = Figure(fontsize = 25, resolution = (1300, 600))
 	four_sheets_s_plane_3d(f[1,1])
 	foursheets_omega_plane(f[1,2])
 	# 
@@ -188,7 +191,7 @@ let
 	# Box(f[1, 2], color = (:red, 0.2), strokewidth = 0)
 	# 
 	colsize!(f.layout, 1, Relative(0.62))
-	# colgap!(f.layout, -30)
+	colgap!(f.layout, -30)
 	#
 	try
 		save(joinpath(@__DIR__, "..", "plots", "foursheets_maps.pdf"), f)
