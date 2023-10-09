@@ -46,7 +46,7 @@ jobs:
           pwd
           mkdir -p plots/
           cd diagrams
-          latex *.tex
+          pdflatex *.tex
           cp *.pdf ../plots/
 
       - name: Upload result as artifact
