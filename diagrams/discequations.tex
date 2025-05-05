@@ -15,17 +15,17 @@
         \begin{tikzpicture}[
                 decoration={
                         markings,
-                        mark=at position 0.55 with {\arrow[scale=0.7]{latex}}
+                        mark=at position 0.6 with {\arrow[scale=1.2]{latex}}
                     }
             ]
             % Line 1
-            \draw[postaction={decorate}] (-1,1) -- (0,0);
-            \draw[postaction={decorate}] (0,0) -- (1,-1);
-
+            \draw[postaction={decorate}] (-1,1) -- (-0.2,0.2);
+            \draw[postaction={decorate}] (0.2,-0.2) -- (1,-1);
+            
             % Line 2
-            \draw[postaction={decorate}] (-1,-1) -- (0,0);
-            \draw[postaction={decorate}] (0,0) -- (1,1);
-
+            \draw[postaction={decorate}] (-1,-1) -- (-0.2,-0.2);
+            \draw[postaction={decorate}] (0.2,0.2) -- (1,1);
+            
             % Circle
             \draw[black, fill=gray!10] (0,0) circle (0.5) node[] {$#1$};
         \end{tikzpicture}
@@ -36,27 +36,27 @@
         \begin{tikzpicture}[
                 decoration={
                         markings,
-                        mark=at position 0.55 with {\arrow[scale=0.7]{latex}}
+                        mark=at position 0.6 with {\arrow[scale=1.2]{latex}}
                     }
             ]
             % Line 1
-            \draw[postaction={decorate}] (-2,1) -- (-1,0);
-            \draw[postaction={decorate}] (1,0) -- (2,-1);
+            \draw[postaction={decorate}] (-2,1) -- (-1.2,0.2);
+            \draw[postaction={decorate}] (1.2,-0.2) -- (2,-1);
             % Line 2
-            \draw[postaction={decorate}] (-2,-1) -- (-1,0);
-            \draw[postaction={decorate}] (1,0) -- (2,1);
-
+            \draw[postaction={decorate}] (-2,-1) -- (-1.2,-0.2);
+            \draw[postaction={decorate}] (1.2,0.2) -- (2,1);
+            
             % Middle lines
             \draw[postaction={decorate}] (-1,0) to[out=65,in=115] (1,0);
             \draw[postaction={decorate}] (-1,0) to[out=-65,in=-115] (1,0);
-
+            
             % Cross
             \draw[dashed] (-0.5,1) -- (0.5,-1);
-
+            
             % Circle
             \draw[black, fill=gray!10] (-1,0) circle (0.5) node[] {$#1$};
             \draw[black, fill=gray!10] (1,0) circle (0.5) node[] {$#2$};
-
+            
         \end{tikzpicture}
     }}
 
