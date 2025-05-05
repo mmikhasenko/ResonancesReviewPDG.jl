@@ -137,7 +137,7 @@ end
 
 # ╔═╡ 769b7491-4b29-4d42-b9e6-ad5cd0bb72e9
 begin
-	f = Figure(fontsize = 25, resolution = (800, 600))
+	f = Figure(fontsize = 25, size = (800, 600))
 	four_sheets_s_plane_3d(f[1,1])
 	try 
 		save(joinpath(@__DIR__, "..", "plots", "foursheets_s_plane.pdf"), f)
@@ -183,7 +183,7 @@ end
 
 # ╔═╡ 95c399cc-09c3-46b2-a3d5-9d56592931b2
 let
-	f = Figure(fontsize = 25, resolution = (1300, 600))
+	f = Figure(fontsize = 25, size = (1300, 600))
 	four_sheets_s_plane_3d(f[1,1])
 	foursheets_omega_plane(f[1,2])
 	# 
