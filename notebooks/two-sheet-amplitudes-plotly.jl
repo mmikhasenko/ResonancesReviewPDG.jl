@@ -171,28 +171,6 @@ end
 # ╔═╡ 6d14b882-9469-4ed8-84b0-25d72df3c02d
 theme_palette(palette)[10];
 
-# ╔═╡ 3d659a6b-790a-42b7-9430-caa20f004700
-clip(z, vclip=40) = abs(z)<vclip ? z : vclip*sign(z)
-
-# ╔═╡ 35408a25-28b4-4279-99e1-041a82148a59
-"""
-    camera_eye(az_deg, el_deg; zoom=1.0)
-
-Convert azimuth and elevation in degrees to Plotly `camera.eye` coordinates.
-Zoom=1 means unit sphere, zoom >1 means zoom in (closer camera).
-"""
-function camera_eye(az_deg, el_deg; zoom=1.0)
-    r = 2.6 / zoom
-    az = deg2rad(az_deg-90)
-    el = deg2rad(el_deg)
-
-    x = r * cos(el) * cos(az)
-    y = r * cos(el) * sin(az)
-    z = r * sin(el)
-
-    return Dict(:x => x, :y => y, :z => z)
-end
-
 # ╔═╡ 92c6239c-2017-4f7c-8543-cb0553a3235f
 extra_kwargs = Dict(
 			:series => Dict(
@@ -254,6 +232,9 @@ let
 	plot!()
 end
 
+# ╔═╡ 3d659a6b-790a-42b7-9430-caa20f004700
+clip(z, vclip=40) = abs(z)<vclip ? z : vclip*sign(z)
+
 # ╔═╡ 09ed5cb0-ad38-4e68-91f9-3ef4015b8bb2
 let
 	plot(colorbar=false, size=(700,500), axis=nothing)
@@ -302,6 +283,25 @@ let
 	savefig(joinpath("sheet-II.png"))
 	savefig(joinpath("sheet-II.pdf"))
 	plot!()
+end
+
+# ╔═╡ 35408a25-28b4-4279-99e1-041a82148a59
+"""
+    camera_eye(az_deg, el_deg; zoom=1.0)
+
+Convert azimuth and elevation in degrees to Plotly `camera.eye` coordinates.
+Zoom=1 means unit sphere, zoom >1 means zoom in (closer camera).
+"""
+function camera_eye(az_deg, el_deg; zoom=1.0)
+    r = 2.6 / zoom
+    az = deg2rad(az_deg-90)
+    el = deg2rad(el_deg)
+
+    x = r * cos(el) * cos(az)
+    y = r * cos(el) * sin(az)
+    z = r * sin(el)
+
+    return Dict(:x => x, :y => y, :z => z)
 end
 
 # ╔═╡ 8cbd4580-cd18-4bb6-be93-9e0f43542591
