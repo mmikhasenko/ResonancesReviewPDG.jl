@@ -2,3 +2,8 @@ plots/
 *.aux
 *.dvi
 *.log
+
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.fdb_latexmk
