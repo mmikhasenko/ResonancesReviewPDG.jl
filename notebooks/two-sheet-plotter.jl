@@ -95,7 +95,7 @@ end
 md"""
 ## 3D visualization of two-sheet Breit-Wigner amplitude
 
-The function below creates a professional 3D plot showing the imaginary part of the Breit-Wigner amplitude on both Riemann sheets. Sheet I (blue) corresponds to the physical sheet, while Sheet II (red) corresponds to the unphysical sheet. The branch cut is shown as a black line starting from the threshold point (green dot).
+The function below creates a professional 3D plot showing the imaginary part of the Breit-Wigner amplitude on both Riemann sheets. Sheet I (green) corresponds to the physical sheet, while Sheet II (red) corresponds to the unphysical sheet. The branch cut is shown as a black line starting from the threshold point (lime dot). The surfaces are clipped at z = ±12 to show the open nature of the amplitude near the resonance.
 """
 
 # ╔═╡ 34576736-848a-4cae-8181-6a659f172f4a
@@ -105,7 +105,7 @@ function two_sheets_s_plane_3d(grid_position)
         xlabel = L"\mathrm{Re}(s)",
         ylabel = L"\mathrm{Im}(s)",
         zlabel = L"\mathrm{Im}(A)",
-        zlabelrotation = π * (0.55),
+        zlabelrotation = π * (0.47),
         xlabeloffset = 20,
         ylabeloffset = 20,
         xtickformat = xv -> latexstring.(string.(xv)),
@@ -118,14 +118,14 @@ function two_sheets_s_plane_3d(grid_position)
     zv1 = sheetI.(bw |> Ref, xv' .+ 1im .* yv_up) .|> imag
     zv2 = sheetI.(bw |> Ref, xv' .+ 1im .* yv_dn) .|> imag
 
-    # Clip values for better visualization
-    clip(z) = abs(z) < 15 ? z : 15 * sign(z)
+    # Clip values for better visualization - allow open surfaces
+    clip(z) = abs(z) < 12 ? z : 12 * sign(z)
     zv1 = map(clip, zv1)
     zv2 = map(clip, zv2)
 
-    # Add surfaces with wireframes
+    # Add surfaces with wireframes - more human-friendly colors
     surface_and_wireframe!(ax, xv, yv_dn, zv2'; col = :red, transparency = false)
-    surface_and_wireframe!(ax, xv, yv_up, zv1'; col = RGB(0.2, 0.4, 1), transparency = false)
+    surface_and_wireframe!(ax, xv, yv_up, zv1'; col = :green, transparency = false)
 
     # Add branch cut line
     xv_cut = range(bw.mth^2, -0.2, 101)
@@ -138,12 +138,13 @@ function two_sheets_s_plane_3d(grid_position)
 
     # Add sheet labels
     sv = ["I", "II"]
-    xy = Point3f[(0.5, 0.15, 5), (0.5, -0.15, 5)]
+    xy = Point3f[(0.1, 0.18, 1), (0.1, -0.18, 1)]
     scatter!(ax, xy, markersize = 60, color = :white)
     text!(xy; text = sv, fontsize = 25, align = (:center, :center))
 
-    # Set z limits
-    zlims!(-20, 20)
+    # Set z limits - adjusted to show open surfaces
+    zlims!(-15, 15)
+    ax.scene.theme[:clip_planes] = [Plane3f(Point3f(1), Vec3f(0, 0, -1))]
 end
 
 # ╔═╡ 769b7491-4b29-4d42-b9e6-ad5cd0bb72e9
@@ -166,7 +167,7 @@ end
 # ╠═98047efc-9326-4f8f-a92c-c26ee663d60d
 # ╟─bc8e0cb2-608f-4282-9cb1-bfdb6cb18550
 # ╠═4a4f9272-b3d2-455e-8e1b-1598ab6bf241
-# ╠═6bb69d21-4470-4cb3-88c7-556e3ff2afc7
+# ╟─6bb69d21-4470-4cb3-88c7-556e3ff2afc7
 # ╠═2e595ec1-de80-453a-8f7e-0789bc6c1231
 # ╠═98db5124-17c7-433a-9c0d-acea8942cff1
 # ╠═3f1e3cb1-6a71-4820-b8cc-d4e7b8ba218f
